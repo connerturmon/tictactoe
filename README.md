@@ -5,10 +5,7 @@ For those of you who are here from somewhere else, the post can be found [here](
 ## Version History
 ### v1.1
 - Tic Tac Toe re-written in a cleaner style.
-<<<<<<< HEAD
 - **Lots** of new comments!
-=======
->>>>>>> 50b510f28e9c5b4a0474488dfc09726536dd693c
 - Used feedback from reddit post to make code more concise.
 - The board is now only 1 array, instead of 1 for drawing and 1 for holding position.
 - Draw condition no longer exists (still trying to figure it out with only 1 board).
