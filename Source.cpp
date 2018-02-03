@@ -55,7 +55,7 @@ void GetPlayerInput(int position[], int player)
 		if (player == X) std::cout << "X\n"; else std::cout << "O\n";
 		std::cout << "Enter a position from 1-9: " << std::endl;
 		std::cin >> position_input;
-		if (position_input < 0 || position_input > 9)
+		if (position_input < 1 || position_input > 9)
 		{
 			DrawBoard();
 			std::cout << "Invalid input! Choose another..." << std::endl;
