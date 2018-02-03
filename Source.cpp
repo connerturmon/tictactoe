@@ -1,99 +1,105 @@
+/**********************************************************\
+| TIC TAC TOE v1.1                                         |
+| Thank you for all the help r/programming! You guys rock! |
+|                                                          |
+\**********************************************************/
+
 #include <iostream>
 
-void GetPlayerInput(int[], int);		// Checks the validity of player input and assigns to board
-void DrawBoard();		// Clears screen & draws the board to the screen
-bool CheckWin();		// Checks if there is a winner
+//-FUNCTION PROTOTYPES
+void DrawBoard();		// Draws the board each turn!
+void GetInput();		// Asks player for (valid) input and returns that value!
+int CheckWinner();		// Checks for a winner!
 
-int position[9]{};		// The board!
-char board[9]{ '1', '2', '3','4','5','6','7','8','9' };		// The visible board
-bool game_draw = false;
-const short FREE_SLOT = 0;
-const short X = 1;
-const short O = 2;
+//-CONSTANTS
+const int FREE = 0;		// Board slot not taken
+const int FALSE = 0;
+const int X = 1;		// Player X
+const int O = 2;		// Player Y
+const int DRAW = -1;	// Game is a draw
 
+//-GLOBAL VARS
+char board[9] = { '1','2','3','4','5','6','7','8','9' };	// The board!
+int player = X;			// The player!
+
+//-MAIN
 int main()
 {
-	bool game_won = false;
-	int player = X;
-	int player_input;
+	int winner = FALSE;		// For winner: FALSE = 0, X = 1, O = 2
 
-	while (!game_won)
+	// The Game //
+	while (!winner)
 	{
 		DrawBoard();
-		GetPlayerInput(position, player);
-		game_won = CheckWin();
+		GetInput();
+		winner = CheckWinner();
 
-		if (player != O) player = O; else player = X;
+		if (player != O) player = O; else player = X;	// Switches player each turn
 	}
 	DrawBoard();
-	if (game_draw) std::cout << "The game was a draw!" << std::endl;
-	else if (player != X) std::cout << "Congratulations Player X! You Win!" << std::endl;
-	else std::cout << "Congratulations Player O! You Win!" << std::endl;
+	if (winner == DRAW) 
+		std::cout << "The game was a draw!\n";
+	else 
+		std::cout << "Congratulations Player " << winner << "!\nYou win!\n";	// Winner winner, chicken dinner
 
+	// Used to hold program open after loop. May not be necessary on your system.
 	std::cin.ignore();
 	std::cin.get();
 }
 
+//-FUNCTION DEFININTIONS (View Prototypes for Info)
 void DrawBoard()
 {
-	system("CLS");
-	std::cout << std::endl
-		<< " " << board[0] << " | " << board[1] << " | " << board[2] << " " << std::endl
-		<< "-----------" << std::endl
-		<< " " << board[3] << " | " << board[4] << " | " << board[5] << " " << std::endl
-		<< "-----------" << std::endl
-		<< " " << board[6] << " | " << board[7] << " | " << board[8] << " " << std::endl;
-
+	system("CLS");		// If you can't compile, remove this (not compatible with all systems)
+	std::cout
+		<< "Tic Tac Toe v1.1 : THANK YOU REDDIT! <3\n"
+		<< " " << board[0] << " | " << board[1] << " | " << board[2] << " \n"
+		<< "-----------\n"
+		<< " " << board[3] << " | " << board[4] << " | " << board[5] << " \n"
+		<< "-----------\n"
+		<< " " << board[6] << " | " << board[7] << " | " << board[8] << " \n";
 }
 
-void GetPlayerInput(int position[], int player)
+void GetInput()
 {
 	int position_input;
+
+	// Checks Input Validity //
 	while (true)
 	{
-		std::cout << "Player ";
-		if (player == X) std::cout << "X\n"; else std::cout << "O\n";
-		std::cout << "Enter a position from 1-9: " << std::endl;
+		std::cout << "Player " << player << "\n" << "Enter a position (1-9):\n";
 		std::cin >> position_input;
-		if (position_input < 0 || position_input > 9)
+		position_input--;			// Decremement input since arrays begin at 0
+		if (position_input < 0 || position_input > 8 || board[position_input] == 'X' || board[position_input] == 'O')
 		{
-			DrawBoard();
-			std::cout << "Invalid input! Choose another..." << std::endl;
-			continue;
-		}
-		if (position[position_input - 1] != FREE_SLOT)
-		{
-			DrawBoard();
-			std::cout << "Space already taken! Choose another..." << std::endl;
+			system("CLS");			// If you can't compile, remove this (not compatible with all systems)
+			DrawBoard();			// Re-draw board since we just cleared screen
+			std::cout << "INVALID POSITION, TRY AGAIN...\n";
 			continue;
 		}
 		break;
 	}
-	position[position_input - 1] = player;		// Player will either be 1 or 2 (X or O respectively) which gets stored at the position
-	if (player != X) board[position_input - 1] = 'O'; else board[position_input - 1] = 'X';
+	// Updates Board Value //
+	if (player != X) board[position_input] = 'O';
+	else board[position_input] = 'X';
 }
 
-bool CheckWin()
+// DISCLAIMER: This function is still a spaghetti mess-- but higher quality spaghetti.
+int CheckWinner()
 {
-	// X Win Conditions
-	if (position[0] == X && position[1] == X && position[2] == X) return true;
-	else if (position[3] == X && position[4] == X && position[5] == X) return true;
-	else if (position[6] == X && position[7] == X && position[8] == X) return true;
-	else if (position[0] == X && position[3] == X && position[6] == X) return true;
-	else if (position[1] == X && position[4] == X && position[7] == X) return true;
-	else if (position[2] == X && position[5] == X && position[8] == X) return true;
-	else if (position[0] == X && position[4] == X && position[8] == X) return true;
-	else if (position[2] == X && position[4] == X && position[6] == X) return true;	
-	
-	// O Win Conditions
-	else if (position[0] == O && position[1] == O && position[2] == O) return true;
-	else if (position[3] == O && position[4] == O && position[5] == O) return true;
-	else if (position[6] == O && position[7] == O && position[8] == O) return true;
-	else if (position[0] == O && position[3] == O && position[6] == O) return true;
-	else if (position[1] == O && position[4] == O && position[7] == O) return true;
-	else if (position[2] == O && position[5] == O && position[8] == O) return true;
-	else if (position[0] == O && position[4] == O && position[8] == O) return true;
-	else if (position[2] == O && position[4] == O && position[6] == O) return true;
+	// Check Row Wins //
+	if (board[0] == board[1] && board[1] == board[2]) return player;
+	else if (board[3] == board[4] && board[4] == board[5]) return player;
+	else if (board[6] == board[7] && board[7] == board[8]) return player;
 
-	else return false;
+	// Check Column Wins //
+	else if (board[0] == board[3] && board[3] == board[6]) return player;
+	else if (board[1] == board[4] && board[4] == board[7]) return player;
+	else if (board[2] == board[5] && board[5] == board[8]) return player;
+
+	// Check Diagonals //
+	else if (board[0] == board[4] && board[4] == board[8]) return player;
+	else if (board[2] == board[4] && board[4] == board[6]) return player;
+
+	else return FALSE;
 }
