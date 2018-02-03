@@ -69,8 +69,12 @@ void GetInput()
 	{
 		std::cout << "Player " << player << "\n" << "Enter a position (1-9):\n";
 		std::cin >> position_input;
+<<<<<<< HEAD
 		position_input--;			// Decremement input since arrays begin at 0
 		if (position_input < 0 || position_input > 8 || board[position_input] == 'X' || board[position_input] == 'O')
+=======
+		if (position_input < 1 || position_input > 9)
+>>>>>>> 50b510f28e9c5b4a0474488dfc09726536dd693c
 		{
 			system("CLS");			// If you can't compile, remove this (not compatible with all systems)
 			DrawBoard();			// Re-draw board since we just cleared screen
