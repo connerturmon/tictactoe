@@ -69,7 +69,7 @@ void GetInput()
 	{
 		std::cout << "Player " << player << "\n" << "Enter a position (1-9):\n";
 		std::cin >> position_input;
-		position_input--;			// Decremement input since arrays begin at 0
+		position_input--;			// Decrement input since arrays begin at 0
 		if (position_input < 0 || position_input > 8 || board[position_input] == 'X' || board[position_input] == 'O')
 		{
 			system("CLS");			// If you can't compile, remove this (not compatible with all systems)
