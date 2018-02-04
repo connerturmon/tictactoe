@@ -47,7 +47,7 @@ int main()
 	std::cin.get();
 }
 
-//-FUNCTION DEFININTIONS (View Prototypes for Info)
+//-FUNCTION DEFINITIONS (View Prototypes for Info)
 void DrawBoard()
 {
 	system("CLS");		// If you can't compile, remove this (not compatible with all systems)
