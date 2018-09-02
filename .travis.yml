@@ -1,0 +1,6 @@
+lanuage: cpp
+compiler:
+  - g++
+  - clang
+script:
+  - make test
